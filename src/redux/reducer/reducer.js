@@ -16,6 +16,12 @@ const reducer = (data = initialState, action) => {
         list: [...data.list, action.payload],
       };
 
+    case "Delete_List":
+      return {
+        ...data,
+        list: data.list.filter((item) => item.id !== action.payload),
+      };
+
     default:
       return data;
   }

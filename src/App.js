@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { AddList, GetList } from "./redux/action/action";
+import { AddList, DeleteList, GetList } from "./redux/action/action";
 import "./App.css";
 
 const App = () => {
@@ -29,16 +29,24 @@ const App = () => {
         id: info.length + 1,
         name: inputValue,
       });
-      dispatch(AddList([response.data]));
-      fetchData(); // Yeni öğe ekledikten sonra güncel veriyi getir
+      dispatch(AddList(response.data));
     } catch (error) {
       console.error("Error adding item:", error);
     }
   };
 
+  const handleDelete = async (item) => {
+    try {
+      await axios.delete(`http://localhost:3000/users/${item}`);
+      dispatch(DeleteList(item));
+    } catch (error) {
+      console.error("Error deleting item:", error);
+    }
+  };
+
   useEffect(() => {
     fetchData();
-  }, []); // Sadece bir kere çalışsın diye boş dependency array
+  }, []);
 
   return (
     <div className="app-container">
@@ -61,6 +69,7 @@ const App = () => {
         {info.map((item) => (
           <li key={item.id} className="list-item">
             {item.name}
+            <button onClick={() => handleDelete(item.id)}>delete</button>
           </li>
         ))}
       </ul>
