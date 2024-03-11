@@ -26,7 +26,7 @@ const App = () => {
 
     try {
       const response = await axios.post("http://localhost:3000/users", {
-        id: info.length + 1,
+        id: (info.length + 1).toString(),
         name: inputValue,
       });
       dispatch(AddList(response.data));
@@ -35,10 +35,10 @@ const App = () => {
     }
   };
 
-  const handleDelete = async (item) => {
+  const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/users/${item}`);
-      dispatch(DeleteList(item));
+      await axios.delete(`http://localhost:3000/users/${id}`);
+      dispatch(DeleteList(id));
     } catch (error) {
       console.error("Error deleting item:", error);
     }
