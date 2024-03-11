@@ -22,6 +22,15 @@ const reducer = (data = initialState, action) => {
         list: data.list.filter((item) => item.id !== action.payload),
       };
 
+
+      case "Edit_List":
+        return {
+          ...data,
+          list: data.list.map((item) =>
+            item.id === action.payload.id ? { ...item, name: action.payload.name } : item
+          ),
+        };
+
     default:
       return data;
   }

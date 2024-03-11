@@ -12,3 +12,10 @@ export const DeleteList = (item) => ({
   type: "Delete_List",
   payload: item,
 });
+
+
+
+export const EditList = (item) => ({
+  type: "Edit_List",
+  payload: item,
+});
