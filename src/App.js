@@ -1,14 +1,14 @@
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { AddList, DeleteList, EditList, GetList } from "./redux/action/action";
+import { AddList, DeleteList, GetList } from "./redux/action/action";
 import "./App.css";
+import EditBtn from "./components/editbutton/editbtn";
 
 const App = () => {
   const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState("");
-  const [editItemId, setEditItemId] = useState(null); // Добавлено состояние для отслеживания редактируемого элемента
+  const [editItemId, setEditItemId] = useState(null); 
   const info = useSelector((state) => state.listReducer.list);
 
   const fetchData = async () => {
@@ -46,21 +46,6 @@ const App = () => {
     }
   };
 
-
-
-
-  const handleEdit = async (id) => {
-    try {
-      await axios.put(`http://localhost:3000/users/${id}`, {
-        name: inputValue,
-      });
-      dispatch(EditList({ id, name: inputValue }));
-      setEditItemId(null); // После редактирования сбрасываем состояние редактируемого элемента
-    } catch (error) {
-      console.error("Error editing item:", error);
-    }
-  };
-
   useEffect(() => {
     fetchData();
   }, []);
@@ -86,14 +71,13 @@ const App = () => {
         {info.map((item) => (
           <li key={item.id} className="list-item">
             {editItemId === item.id ? (
-              <>
-                <input
-                  type="text"
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                />
-                <button onClick={() => handleEdit(item.id)}>Save</button>
-              </>
+              <EditBtn
+                item={item}
+                inputValue={inputValue}
+                setInputValue={setInputValue}
+                setEditItemId={setEditItemId}
+                handleDelete={handleDelete}
+              />
             ) : (
               <>
                 {item.name}
