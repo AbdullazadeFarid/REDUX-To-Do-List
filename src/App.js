@@ -8,7 +8,7 @@ import EditBtn from "./components/editbutton/editbtn";
 const App = () => {
   const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState("");
-  const [editItemId, setEditItemId] = useState(null); 
+  const [editItemId, setEditItemId] = useState(null);
   const info = useSelector((state) => state.listReducer.list);
 
   const fetchData = async () => {
@@ -76,7 +76,7 @@ const App = () => {
                 inputValue={inputValue}
                 setInputValue={setInputValue}
                 setEditItemId={setEditItemId}
-                handleDelete={handleDelete}
+                
               />
             ) : (
               <>
